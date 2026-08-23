@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Nhúng Video YouTube Popup</title>
+    <style>
+      .video-container {
+        text-align: center;
+        margin-top: 50px;
+      }
+      .play-btn {
+        padding: 15px 30px;
+        font-size: 18px;
+        background-color: #ff0000;
+        color: white;
+        border: none;
+        cursor: pointer;
+        border-radius: 5px;
+        font-weight: bold;
+      }
+      .popup-overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.85);
+        z-index: 9999;
+        justify-content: center;
+        align-items: center;
+      }
+      .popup-content {
+        position: relative;
+        width: 80%;
+        max-width: 800px;
+        aspect-ratio: 16/9;
+      }
+      .popup-content iframe {
+        width: 100%;
+        height: 100%;
+        border: none;
+      }
+      .close-btn {
+        position: absolute;
+        top: -40px;
+        right: 0;
+        color: white;
+        font-size: 35px;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="video-container">
+      <button class="play-btn" onclick="moVideo()">
+        Bấm vào đây để xem Video
+      </button>
+    </div>
+    <div
+      id="videoPopup"
+      class="popup-overlay"
+      onclick="dongVideoKhiClickNgoai(event)"
+    >
+      <div class="popup-content">
+        <span class="close-btn" onclick="dongVideo()">&times;</span>
+        <iframe
+          id="youtubePlayer"
+          src=""
+          allow="autoplay; encrypted-media"
+          allowfullscreen
+        ></iframe>
+      </div>
+    </div>
+
+    <script>
+      // ID video YouTube của bài hát Rick Astley - Never Gonna Give You Up
+      const youtubeVideoId = "dQw4w9WgXcQ";
+
+      const popup = document.getElementById("videoPopup");
+      const player = document.getElementById("youtubePlayer");
+
+      function moVideo() {
+        // Cập nhật đường dẫn nhúng và bật tính năng tự động phát (autoplay)
+        player.src = `https://www.youtube.com/embed/${youtubeVideoId}?autoplay=1`;
+        popup.style.display = "flex";
+      }
+
+      function dongVideo() {
+        // Xóa src khi đóng để dừng video đang phát ẩn danh
+        player.src = "";
+        popup.style.display = "none";
+      }
+
+      function dongVideoKhiClickNgoai(event) {
+        if (event.target.id === "videoPopup") {
+          dongVideo();
+        }
+      }
+    </script>
+  </body>
+</html>
